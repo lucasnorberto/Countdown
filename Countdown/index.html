@@ -1,40 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Countdown</title>
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <!-- Stylesheet -->
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Contador de dias e horas</title>
     <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="countdown">
-        <div class="box">
-            <span class="num" id="day-box">00</span>
-            <span class="text">Days</span>
+  </head>
+  <body>
+    <h1>Contador de dias e horas</h1>
+
+    <div class="form-container">
+      <form>
+        <div>
+          <label for="date1">Data 1:</label>
+          <input type="date" id="date1" required>
+          <input type="time" id="time1" required>
         </div>
-        <div class="box">
-            <span class="num" id="hr-box">00</span>
-            <span class="text">Hours</span>
+        <div>
+          <label for="date2">Data 2:</label>
+          <input type="date" id="date2" required>
+          <input type="time" id="time2" required>
         </div>
-        <div class="box">
-            <span class="num" id="min-box">00</span>
-            <span class="text">Minutes</span>
+        <div>
+          <button type="button" onclick="calcular()">Calcular</button>
         </div>
-        <div class="box">
-            <span class="num" id="sec-box">00</span>
-            <span class="text">Seconds</span>
-        </div>
+      </form>
     </div>
 
-    <div>
-        <label for="input-date">Digite uma data:</label>
-        <input type="date" id="input-date">
-        <button onclick="capturarData()">Capturar Data</button>
-    </div>
+    <div id="resultado-container"></div>
 
-    <!-- Script -->
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
