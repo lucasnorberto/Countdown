@@ -6,7 +6,7 @@
     color: #ffffff;
 }
 body{
-    background-color: #111111;
+    background-color: #2b2929;
 }
 .countdown{
     width: 80vw;
@@ -17,6 +17,7 @@ body{
     transform: translate(-50%,-50%);
     top: 50%;
     left: 50%;
+    
 }
 .box{
     width: 28vmin;
@@ -28,6 +29,7 @@ body{
     position: relative;
     box-shadow: 15px 15px 30px rgba(0,0,0,0.5);
     font-size: 16px;
+    
 }
 .box:after{
     content: "";
@@ -89,4 +91,15 @@ span.text{
     .span.text{
         font-size: 1.5em;
     }
+}
+
+button{
+    font-size: x-large;
+    color: #ffffff;
+    background-color: #2887e3;
+
+}
+
+input{
+    background-color: #202020;
 }
