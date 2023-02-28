@@ -34,4 +34,10 @@ h1 {
     border: 1px solid black;
     display: none;
   }
-  
+
+  .linhadivisoria{
+    background-color: rgb(155, 154, 154);
+    padding: 3px;
+    border-radius: 3%;
+   
+  }
