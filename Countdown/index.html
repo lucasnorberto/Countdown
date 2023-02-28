@@ -3,21 +3,40 @@
   <head>
     <meta charset="UTF-8">
     <title>Contador de dias e horas</title>
+    <!--Google Fontes-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
   
-
-   <div class="linhadivisoria"></div>
-
    <div class="segundocodigo">
 
     <label for="data-hora">Data e Hora:</label>
     <input type="datetime-local" id="data-hora">
     <div id="contador"></div>
-
-
    </div>
+
+   <div class="box">
+    <span class="dia" id="dia-box">00</span>
+    <span class="text">Dia</span>
+   </div>
+   <div class="box">
+    <span class="horas" id="hora-box">00</span>
+    <span class="text">Horas</span>
+   </div>
+   <div class="box">
+    <span class="minutos" id="min-box">00</span>
+    <span class="text">Minutos</span>
+   </div>
+   <div class="box">
+    <span class="segundos" id="sec-box">00</span>
+    <span class="text">Segundos</span>
+  </div>
+
+
 
     <script src="script.js"></script>
   </body>
