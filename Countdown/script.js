@@ -1,3 +1,9 @@
+// Seleciona os elementos do HTML onde serão exibidos os valores do contador
+const dias = document.getElementById('diabox');
+const horas = document.getElementById('horabox');
+const minutos = document.getElementById('minbox');
+const segundos = document.getElementById('secbox');
+
 // Seleciona o elemento input e o elemento contador
 const input = document.getElementById('data-hora');
 const contador = document.getElementById('contador');
@@ -44,4 +50,10 @@ input.addEventListener('input', () => {
   atualizarContador();
   // Inicia o intervalo do contador, que chama a função de atualização a cada segundo
   intervalo = setInterval(atualizarContador, 1000);
+
+  diabox.textContent = dias;
+  horabox.textContent = horas;
+  minbox.textContent = minutos;
+  secbox.textContent = segundos;
+
 });
