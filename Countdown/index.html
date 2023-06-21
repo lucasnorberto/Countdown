@@ -1,43 +1,63 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Contador de dias e horas</title>
-    <!--Google Fontes-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-  
-   <div class="segundocodigo">
-
-    <label for="data-hora">Data e Hora:</label>
-    <input type="datetime-local" id="data-hora">
-    <div id="contador"></div>
-   </div>
-<div class="countdown">
-   <div class="box">
-    <span class="num" id="diabox">00</span>
-    <span class="text">Dia</span>
-   </div>
-   <div class="box">
-    <span class="num" id="horabox">00</span>
-    <span class="text">Horas</span>
-   </div>
-   <div class="box">
-    <span class="num" id="minbox">00</span>
-    <span class="text">Minutos</span>
-   </div>
-   <div class="box">
-    <span class="num" id="secbox">00</span>
-    <span class="text">Segundos</span>
+<head>
+  <title>Contador Regressivo</title>
+  <style>
+    .container {
+      text-align: center;
+      margin-top: 100px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Contador Regressivo</h2>
+    <label for="dateInput">Insira a data e hora:</label>
+    <input type="datetime-local" id="dateInput">
+    <br><br>
+    <button onclick="startCountdown()">Iniciar Contagem</button>
+    <h1 id="countdown"></h1>
+    <h3 id="message"></h3>
   </div>
-</div>
 
+  <script>
+    function startCountdown() {
+      var dateInput = document.getElementById("dateInput").value;
+      var targetDate = new Date(dateInput).getTime();
 
-    <script src="script.js"></script>
-  </body>
+      if (isNaN(targetDate)) {
+        alert("Data e hora inválidas. Por favor, insira uma data e hora válidas.");
+        return;
+      }
+
+      var countdownTimer = setInterval(function() {
+        var now = new Date().getTime();
+        var timeRemaining = targetDate - now;
+
+        if (timeRemaining < 0) {
+          clearInterval(countdownTimer);
+          document.getElementById("countdown").innerHTML = "00:00:00:00";
+          document.getElementById("message").innerHTML = "A data e hora já passaram.";
+        } else {
+          var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+          var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+          var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+          days = addLeadingZero(days);
+          hours = addLeadingZero(hours);
+          minutes = addLeadingZero(minutes);
+          seconds = addLeadingZero(seconds);
+
+          document.getElementById("countdown").innerHTML = days + ":" + hours + ":" + minutes + ":" + seconds;
+          document.getElementById("message").innerHTML = "Aguardando chegada...";
+        }
+      }, 1000);
+    }
+
+    function addLeadingZero(number) {
+      return (number < 10 ? "0" : "") + number;
+    }
+  </script>
+</body>
 </html>
