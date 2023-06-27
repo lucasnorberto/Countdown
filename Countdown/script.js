@@ -1,37 +1,46 @@
+function calculateDifference() {
+  var inputDate = document.getElementById("inputDate").value;
+  var inputTime = document.getElementById("inputTime").value;
 
-function countdown() {
-  var targetDate = document.getElementById("targetDate").value;
-  var targetTime = document.getElementById("targetTime").value;
-  var now = new Date();
-  var target = new Date(targetDate + " " + targetTime);
-  var countdown = target - now;
+  // Obter a data e hora atual
+  var currentDate = new Date();
+  var currentTime = currentDate.getTime();
 
-  var interval = setInterval(function() {
-    countdown -= 1000;
+  // Obter a data e hora informadas pelo usuário
+  var userDateTime = new Date(inputDate + " " + inputTime);
+  var userDateTimeMillis = userDateTime.getTime();
 
-    var days = Math.floor(countdown / (1000 * 60 * 60 * 24));
-    var hours = Math.floor((countdown % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    var minutes = Math.floor((countdown % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((countdown % (1000 * 60)) / 1000);
+  // Calcular a diferença em milissegundos
+  var differenceMillis = userDateTimeMillis - currentTime;
+  var isPast = false;
 
-    var message = "";
-    if (countdown < 0) {
-      message = "EXPIRED";
-    } else {
-      message += days < 10 ? "0" + days : days;
-      message += "d ";
-      message += hours < 10 ? "0" + hours : hours;
-      message += "h ";
-      message += minutes < 10 ? "0" + minutes : minutes;
-      message += "m ";
-      message += seconds < 10 ? "0" + seconds : seconds;
-      message += "s";
-    }
+  // Verificar se a data informada já passou
+  if (differenceMillis < 0) {
+    differenceMillis = Math.abs(differenceMillis);
+    isPast = true;
+  }
 
-    document.querySelector(".message").innerHTML = message;
-  }, 1000);
+  // Calcular os dias, horas, minutos e segundos
+  var days = Math.floor(differenceMillis / (1000 * 60 * 60 * 24));
+  differenceMillis -= days * (1000 * 60 * 60 * 24);
+  var hours = Math.floor(differenceMillis / (1000 * 60 * 60));
+  differenceMillis -= hours * (1000 * 60 * 60);
+  var minutes = Math.floor(differenceMillis / (1000 * 60));
+  differenceMillis -= minutes * (1000 * 60);
+  var seconds = Math.floor(differenceMillis / 1000);
+
+  // Formatar os valores menores que 10 com um zero à esquerda
+  days = days < 10 ? "0" + days : days;
+  hours = hours < 10 ? "0" + hours : hours;
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  seconds = seconds < 10 ? "0" + seconds : seconds;
+
+  // Gerar a mensagem de resultado
+  var message = isPast ? "Já se passaram " : "Faltam ";
+  message += days + " dias, " + hours + " horas, " + minutes + " minutos e " + seconds + " segundos.";
+
+  // Atualizar o elemento <p> com a mensagem de resultado
+  document.getElementById("result").innerHTML = message;
 }
 
-window.onload = function() {
-  countdown();
-};
+setInterval(calculateDifference, 1000);

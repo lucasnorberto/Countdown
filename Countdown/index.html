@@ -6,12 +6,14 @@
 <script src="script.js"></script>
 </head>
 <body>
-<div class="container">
-  <h1>Date Counter</h1>
-  <input type="date" id="targetDate" placeholder="Enter a date"/>
-  <input type="time" id="targetTime" placeholder="Enter a time"/>
-  <button onclick="countdown()">Countdown</button>
-  <div class="message"></div>
+  <h1>Contador de Dias</h1>
+  <label for="inputDate">Data:</label>
+<input type="date" id="inputDate">
+<label for="inputTime">Hora:</label>
+<input type="time" id="inputTime">
+<button onclick="calculateDifference()">Calcular</button>
+<br>
+<p id="result"></p>
 </div>
 </body>
 </html>
