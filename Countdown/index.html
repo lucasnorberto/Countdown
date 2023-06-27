@@ -1,63 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Contador Regressivo</title>
-  <style>
-    .container {
-      text-align: center;
-      margin-top: 100px;
-    }
-  </style>
+<title>Date Counter</title>
+<link rel="stylesheet" href="style.css">
+<script src="script.js"></script>
 </head>
 <body>
-  <div class="container">
-    <h2>Contador Regressivo</h2>
-    <label for="dateInput">Insira a data e hora:</label>
-    <input type="datetime-local" id="dateInput">
-    <br><br>
-    <button onclick="startCountdown()">Iniciar Contagem</button>
-    <h1 id="countdown"></h1>
-    <h3 id="message"></h3>
-  </div>
-
-  <script>
-    function startCountdown() {
-      var dateInput = document.getElementById("dateInput").value;
-      var targetDate = new Date(dateInput).getTime();
-
-      if (isNaN(targetDate)) {
-        alert("Data e hora inválidas. Por favor, insira uma data e hora válidas.");
-        return;
-      }
-
-      var countdownTimer = setInterval(function() {
-        var now = new Date().getTime();
-        var timeRemaining = targetDate - now;
-
-        if (timeRemaining < 0) {
-          clearInterval(countdownTimer);
-          document.getElementById("countdown").innerHTML = "00:00:00:00";
-          document.getElementById("message").innerHTML = "A data e hora já passaram.";
-        } else {
-          var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-          var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-          var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-
-          days = addLeadingZero(days);
-          hours = addLeadingZero(hours);
-          minutes = addLeadingZero(minutes);
-          seconds = addLeadingZero(seconds);
-
-          document.getElementById("countdown").innerHTML = days + ":" + hours + ":" + minutes + ":" + seconds;
-          document.getElementById("message").innerHTML = "Aguardando chegada...";
-        }
-      }, 1000);
-    }
-
-    function addLeadingZero(number) {
-      return (number < 10 ? "0" : "") + number;
-    }
-  </script>
+<div class="container">
+  <h1>Date Counter</h1>
+  <input type="date" id="targetDate" placeholder="Enter a date"/>
+  <input type="time" id="targetTime" placeholder="Enter a time"/>
+  <button onclick="countdown()">Countdown</button>
+  <div class="message"></div>
+</div>
 </body>
 </html>

@@ -1,59 +1,37 @@
-// Seleciona os elementos do HTML onde serão exibidos os valores do contador
-const dias = document.getElementById('diabox');
-const horas = document.getElementById('horabox');
-const minutos = document.getElementById('minbox');
-const segundos = document.getElementById('secbox');
 
-// Seleciona o elemento input e o elemento contador
-const input = document.getElementById('data-hora');
-const contador = document.getElementById('contador');
+function countdown() {
+  var targetDate = document.getElementById("targetDate").value;
+  var targetTime = document.getElementById("targetTime").value;
+  var now = new Date();
+  var target = new Date(targetDate + " " + targetTime);
+  var countdown = target - now;
 
-// Define a variável para o intervalo do contador
-let intervalo;
+  var interval = setInterval(function() {
+    countdown -= 1000;
 
-// Função para atualizar o contador
-function atualizarContador() {
-  // Obtém a data final a partir do valor do input
-  const dataFinal = new Date(input.value);
+    var days = Math.floor(countdown / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((countdown % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((countdown % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((countdown % (1000 * 60)) / 1000);
 
-  // Calcula a diferença entre a data final e a data atual em milissegundos
-  const diferenca = dataFinal - new Date();
+    var message = "";
+    if (countdown < 0) {
+      message = "EXPIRED";
+    } else {
+      message += days < 10 ? "0" + days : days;
+      message += "d ";
+      message += hours < 10 ? "0" + hours : hours;
+      message += "h ";
+      message += minutes < 10 ? "0" + minutes : minutes;
+      message += "m ";
+      message += seconds < 10 ? "0" + seconds : seconds;
+      message += "s";
+    }
 
-  // Se a diferença for menor que zero, exibe a mensagem e para o intervalo
-  if (diferenca < 0) {
-    contador.textContent = 'Tempo esgotado!';
-    clearInterval(intervalo);
-    return;
-  }
-
-  // Calcula as horas, minutos e segundos a partir da diferença
-  const horas = Math.floor(diferenca / 1000 / 60 / 60);
-  const minutos = Math.floor((diferenca / 1000 / 60) % 60);
-  const segundos = Math.floor((diferenca / 1000) % 60);
-
-  // Se a diferença em horas for maior ou igual a 24, exibe o contador com a informação de dias e horas
-  if (horas >= 24) {
-    const dias = Math.floor(horas / 24);
-    const horasRestantes = horas % 24;
-    contador.textContent = `${dias} dia(s) e ${horasRestantes.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
-  } else {
-    // Se a diferença em horas for menor que 24, exibe apenas as horas, minutos e segundos
-    contador.textContent = `0 dias ${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
-  }
+    document.querySelector(".message").innerHTML = message;
+  }, 1000);
 }
 
-// Adiciona um ouvinte de eventos para o input, que chama a função de atualização do contador
-input.addEventListener('input', () => {
-  // Para o intervalo anterior, se houver
-  clearInterval(intervalo);
-  // Chama a função de atualização do contador inicialmente para exibir o contador imediatamente após a entrada do usuário
-  atualizarContador();
-  // Inicia o intervalo do contador, que chama a função de atualização a cada segundo
-  intervalo = setInterval(atualizarContador, 1000);
-
-  diabox.textContent = dias;
-  horabox.textContent = horas;
-  minbox.textContent = minutos;
-  secbox.textContent = segundos;
-
-});
+window.onload = function() {
+  countdown();
+};
