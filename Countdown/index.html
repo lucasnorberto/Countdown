@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Contador de Dias</title>
+  <link rel="stylesheet" href="style.css">
   <script>
     function calculateDifference() {
       var inputDate = document.getElementById("inputDate").value;
@@ -53,6 +54,7 @@
   </script>
 </head>
 <body>
+  <container>
   <h1>Contador de Dias</h1>
   <label for="inputDate">Data:</label>
   <input type="date" id="inputDate">
@@ -61,6 +63,8 @@
   <button onclick="calculateDifference()">Calcular</button>
   <br>
   <p id="result"></p>
+
+</container>
   
 </body>
 </html>

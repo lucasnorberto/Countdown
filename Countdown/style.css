@@ -1,18 +1,17 @@
 
 body {
-  background-color: aqua;
+  background: radial-gradient(circle at center, #434141, #131313);
   font-family: sans-serif;
   color: rgb(37, 37, 123);
 }
 
 .container {
+  width: 50%;
  
-  width: 400px;
-  margin: 0 auto;
 }
 
 input {
-  width: 100%;
+  width: 50%;
   padding: 10px;
   border: 1px solid #ccc;
 }
