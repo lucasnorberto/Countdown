@@ -1,70 +1,199 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-  <title>Contador de Dias</title>
-  <link rel="stylesheet" href="style.css">
-  <script>
-    function calculateDifference() {
-      var inputDate = document.getElementById("inputDate").value;
-      var inputTime = document.getElementById("inputTime").value;
-
-      // Obter a data e hora atual
-      var currentDate = new Date();
-      var currentTime = currentDate.getTime();
-
-      // Obter a data e hora informadas pelo usuário
-      var parts = inputDate.split("-");
-      var userDateTime = new Date(parts[0], parts[1] - 1, parts[2], inputTime.substr(0, 2), inputTime.substr(3, 2));
-      var userDateTimeMillis = userDateTime.getTime();
-
-      // Calcular a diferença em milissegundos
-      var differenceMillis = userDateTimeMillis - currentTime;
-      var isPast = false;
-
-      // Verificar se a data informada já passou
-      if (differenceMillis < 0) {
-        differenceMillis = Math.abs(differenceMillis);
-        isPast = true;
-      }
-
-      // Calcular os dias, horas, minutos e segundos
-      var days = Math.floor(differenceMillis / (1000 * 60 * 60 * 24));
-      differenceMillis -= days * (1000 * 60 * 60 * 24);
-      var hours = Math.floor(differenceMillis / (1000 * 60 * 60));
-      differenceMillis -= hours * (1000 * 60 * 60);
-      var minutes = Math.floor(differenceMillis / (1000 * 60));
-      differenceMillis -= minutes * (1000 * 60);
-      var seconds = Math.floor(differenceMillis / 1000);
-
-      // Formatar os valores menores que 10 com um zero à esquerda
-      days = days < 10 ? "0" + days : days;
-      hours = hours < 10 ? "0" + hours : hours;
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      seconds = seconds < 10 ? "0" + seconds : seconds;
-
-      // Gerar a mensagem de resultado
-      var message = isPast ? "Já se passaram " : "Faltam ";
-      message += days + " dias, " + hours + " horas, " + minutes + " minutos e " + seconds + " segundos.";
-
-      // Atualizar o elemento <p> com a mensagem de resultado
-      document.getElementById("result").innerHTML = message;
+  <meta charset="UTF-8">
+  <title>Contador de Tempo</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      background-color: #121212;
+      color: #e0e0e0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
+      padding: 20px;
     }
-
-    setInterval(calculateDifference, 1000);
-  </script>
+    .container {
+      background-color: #1e1e1e;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+      max-width: 420px;
+      width: 100%;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 24px;
+      color: #ffffff;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: 500;
+      color: #b0b0b0;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      background-color: #2a2a2a;
+      border: none;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      color: #e0e0e0;
+      font-size: 16px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #333333;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background-color: #444444;
+    }
+    #resultado {
+      margin-top: 20px;
+      font-size: 16px;
+      text-align: center;
+      color: #e0e0e0;
+    }
+    .icons {
+      font-size: 42px;
+      text-align: center;
+      margin-bottom: 20px;
+      color: #bbbbbb;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    .alerta {
+      background-color: #b41926;
+      color: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-  <container>
-  <h1>Contador de Dias</h1>
-  <label for="inputDate">Data:</label>
-  <input type="date" id="inputDate">
-  <label for="inputTime">Hora:</label>
-  <input type="time" id="inputTime">
-  <button onclick="calculateDifference()">Calcular</button>
-  <br>
-  <p id="result"></p>
+  <div class="container">
+    <div class="icons">
+      <i class="fas fa-clock"></i>
+    </div>
 
-</container>
-  
+    <h1>Contador de Tempo</h1>
+
+    <label>Dia:</label>
+    <input type="number" id="dia" min="1" max="31">
+    
+    <label>Mês:</label>
+    <input type="number" id="mes" min="1" max="12">
+    
+    <label>Ano:</label>
+    <input type="number" id="ano" min="1900">
+
+    <label>Hora:</label>
+    <input type="number" id="hora" min="0" max="23">
+
+    <label>Minuto:</label>
+    <input type="number" id="minuto" min="0" max="59">
+
+    <button onclick="iniciarContagem()">Iniciar Contador</button>
+    <button onclick="pausarContagem()">Pausar</button>
+    <button onclick="resetarContagem()">Resetar</button>
+
+    <div id="resultado"></div>
+    <div id="alertaFinal"></div>
+
+    <!-- Som de alerta -->
+    <audio id="somAlerta" src="https://www.soundjay.com/buttons/sounds/beep-07.mp3" preload="auto"></audio>
+  </div>
+
+  <script>
+    let intervaloAtivo = null;
+    let dataAlvo = null;
+
+    function formatarHora12h(hora, minuto) {
+      const ampm = hora >= 12 ? 'PM' : 'AM';
+      let hora12 = hora % 12;
+      hora12 = hora12 ? hora12 : 12;
+      const minutoFormatado = minuto.toString().padStart(2, '0');
+      return `${hora12}:${minutoFormatado} ${ampm}`;
+    }
+
+    function iniciarContagem() {
+      pausarContagem(); // cancela contagem antiga
+
+      const dia = parseInt(document.getElementById('dia').value);
+      const mes = parseInt(document.getElementById('mes').value) - 1;
+      const ano = parseInt(document.getElementById('ano').value);
+      const hora = parseInt(document.getElementById('hora').value);
+      const minuto = parseInt(document.getElementById('minuto').value);
+
+      dataAlvo = new Date(ano, mes, dia, hora, minuto);
+      const horaFormatada = formatarHora12h(hora, minuto);
+
+      intervaloAtivo = setInterval(() => {
+        const agora = new Date();
+        const diffMs = dataAlvo - agora;
+        const diffAbs = Math.abs(diffMs);
+
+        const segundos = Math.floor(diffAbs / 1000) % 60;
+        const minutos = Math.floor(diffAbs / (1000 * 60)) % 60;
+        const horas = Math.floor(diffAbs / (1000 * 60 * 60)) % 24;
+        const dias = Math.floor(diffAbs / (1000 * 60 * 60 * 24));
+
+        let resultado = '';
+        let alertaFinal = document.getElementById('alertaFinal');
+        alertaFinal.innerHTML = ''; // limpa alerta
+
+        if (diffMs > 0) {
+          resultado = `Faltam ${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos até ${dia}/${mes+1}/${ano} às ${horaFormatada}.`;
+        } else if (diffMs < 0) {
+          resultado = `Já se passaram ${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos desde ${dia}/${mes+1}/${ano} às ${horaFormatada}.`;
+        } else {
+          resultado = "Chegou o momento!";
+          alertaFinal.innerHTML = `<div class="alerta">⏰ Hora marcada atingida!</div>`;
+          document.getElementById("somAlerta").play();
+          pausarContagem();
+        }
+
+        document.getElementById('resultado').textContent = resultado;
+      }, 1000);
+    }
+
+    function pausarContagem() {
+      if (intervaloAtivo) {
+        clearInterval(intervaloAtivo);
+        intervaloAtivo = null;
+      }
+    }
+
+    function resetarContagem() {
+      pausarContagem();
+      document.getElementById('dia').value = '';
+      document.getElementById('mes').value = '';
+      document.getElementById('ano').value = '';
+      document.getElementById('hora').value = '';
+      document.getElementById('minuto').value = '';
+      document.getElementById('resultado').textContent = '';
+      document.getElementById('alertaFinal').innerHTML = '';
+    }
+  </script>
 </body>
 </html>
